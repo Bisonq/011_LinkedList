@@ -1,4 +1,4 @@
-package list.single;
+package list.singleLinks;
 
 import list.List;
 
