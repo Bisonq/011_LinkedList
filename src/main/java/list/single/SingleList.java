@@ -187,22 +187,45 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public E[] toArray(E[] arr) {
-        return null;
+        if(arr.length < this.size())
+            throw  new IllegalArgumentException("Array is to small");
+        Node<E> node = this.head;
+        int i = 0;
+        while(node != null){
+            arr[i++] = node.getElement();
+            node = node.getNext();
+        }
+        return arr;
     }
 
     @Override
     public E get(E element) {
+        if(this.isEmpty())
+            return null;
+        Node<E> node = this.head;
+        while(node != null){
+            if(node.getElement().compareTo(element) == 0)
+                return node.getElement();
+            node = node.getNext();
+        }
         return null;
     }
 
     @Override
     public E getFirst() {
-        return null;
+        if(this.isEmpty())
+            return null;
+        return this.head.getElement();
     }
 
     @Override
     public E getLast() {
-        return null;
+        if(this.isEmpty())
+            return null;
+        Node<E> node = this.head;
+        while(node.getNext() != null)
+            node = node.getNext();
+        return node.getElement();
     }
 
     protected void compareElementToMinMax(E element) {

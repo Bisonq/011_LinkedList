@@ -83,6 +83,7 @@ public interface List<E extends Comparable<E>> {
      * Convert list into array
      * @param arr array that will store list elements
      * @return given empty array with added elements
+     * or IllegalArgumentException when arr length is less than list length
      */
     E[] toArray(E[] arr);
 
