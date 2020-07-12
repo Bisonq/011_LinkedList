@@ -186,7 +186,22 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
     }
 
     @Override
-    public E[] toArray() {
+    public E[] toArray(E[] arr) {
+        return null;
+    }
+
+    @Override
+    public E get(E element) {
+        return null;
+    }
+
+    @Override
+    public E getFirst() {
+        return null;
+    }
+
+    @Override
+    public E getLast() {
         return null;
     }
 

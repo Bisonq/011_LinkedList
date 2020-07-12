@@ -80,8 +80,28 @@ public interface List<E extends Comparable<E>> {
     void clear();
 
     /**
-     * Convert list into element type Array
-     * @return element type Array
+     * Convert list into array
+     * @param arr array that will store list elements
+     * @return given empty array with added elements
      */
-    E[] toArray();
+    E[] toArray(E[] arr);
+
+    /**
+     * Return the first encountered element
+     * @param element value sought
+     * @return value pointer or null when the element is not in the list
+     */
+    E get(E element);
+
+    /**
+     * Return first element in list
+     * @return first element or null when list is empty
+     */
+    E getFirst();
+
+    /**
+     * Return las element in list
+     * @return last element or null when list is empty
+     */
+    E getLast();
 }
