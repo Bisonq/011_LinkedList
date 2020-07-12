@@ -2,6 +2,8 @@ package list.single;
 
 import list.List;
 
+import java.util.Iterator;
+
 public class SingleList<E extends Comparable<E>> implements List<E> {
 
     private Node<E> head;
@@ -187,11 +189,11 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public E[] toArray(E[] arr) {
-        if(arr.length < this.size())
-            throw  new IllegalArgumentException("Array is to small");
+        if (arr.length < this.size())
+            throw new IllegalArgumentException("Array is to small");
         Node<E> node = this.head;
         int i = 0;
-        while(node != null){
+        while (node != null) {
             arr[i++] = node.getElement();
             node = node.getNext();
         }
@@ -200,11 +202,11 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public E get(E element) {
-        if(this.isEmpty())
+        if (this.isEmpty())
             return null;
         Node<E> node = this.head;
-        while(node != null){
-            if(node.getElement().compareTo(element) == 0)
+        while (node != null) {
+            if (node.getElement().compareTo(element) == 0)
                 return node.getElement();
             node = node.getNext();
         }
@@ -213,17 +215,17 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public E getFirst() {
-        if(this.isEmpty())
+        if (this.isEmpty())
             return null;
         return this.head.getElement();
     }
 
     @Override
     public E getLast() {
-        if(this.isEmpty())
+        if (this.isEmpty())
             return null;
         Node<E> node = this.head;
-        while(node.getNext() != null)
+        while (node.getNext() != null)
             node = node.getNext();
         return node.getElement();
     }
@@ -253,5 +255,10 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
         if (stringBuilder.length() > 0)
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         return stringBuilder.toString();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new SingleListIterator<E>(this.head);
     }
 }
