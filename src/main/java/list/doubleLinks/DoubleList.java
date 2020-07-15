@@ -99,17 +99,68 @@ public class DoubleList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public boolean removeFirst() {
-        return false;
+        if(this.isEmpty())
+            return false;
+        else if(this.size() == 1){
+            this.head = null;
+            this.tail = null;
+            this.min = null;
+            this.max = null;
+            return true;
+        }else{
+            this.head = this.head.getNext();
+            this.head.setPrev(null);
+            shareForMinMax(this.head);
+            return true;
+        }
     }
 
     @Override
     public boolean removeLast() {
-        return false;
+        if(this.isEmpty())
+            return false;
+        else if(this.size() == 1){
+            this.head = null;
+            this.tail = null;
+            this.min = null;
+            this.max = null;
+            return true;
+        }else{
+            this.tail = this.tail.getPrev();
+            this.tail.setNext(null);
+            shareForMinMax(this.head);
+            return true;
+        }
     }
 
     @Override
     public boolean remove(E element) {
-        return false;
+        if(this.isEmpty())
+            return false;
+        else if(this.size() == 1){
+            if(element.compareTo(this.head.getElement()) == 0){
+                this.head = null;
+                this.tail = null;
+                this.min = null;
+                this.max = null;
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            Node<E> node = this.head;
+            while(node != null){
+                if(node.getElement().compareTo(element) == 0) {
+                    this.head = this.head.getNext();
+                    this.head.setPrev(null);
+                    shareForMinMax(this.head);
+                    return true;
+                }else{
+                    node = node.getNext();
+                }
+            }
+            return false;
+        }
     }
 
     @Override
@@ -199,7 +250,11 @@ public class DoubleList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new DoubleListIterator<>(this.head);
+    }
+
+    public DoubleListIterator<E> reverseIterator() {
+        return new DoubleListIterator<>(this.head, this.tail);
     }
 
     public String toString(){
@@ -214,15 +269,15 @@ public class DoubleList<E extends Comparable<E>> implements List<E> {
         return stringBuilder.toString();
     }
 
-//    public String toString(){
-//        StringBuilder stringBuilder = new StringBuilder();
-//        Node<E> node = this.tail;
-//        for(int i = 0 ; i < size() ; i++) {
-//            stringBuilder.append(node.getElement()).append(" ");
-//            node = node.getPrev();
-//        }
-//        if(stringBuilder.length() > 0)
-//            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-//        return stringBuilder.toString();
-//    }
+    public String toStringReverse(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Node<E> node = this.tail;
+        for(int i = 0 ; i < size() ; i++) {
+            stringBuilder.append(node.getElement()).append(" ");
+            node = node.getPrev();
+        }
+        if(stringBuilder.length() > 0)
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        return stringBuilder.toString();
+    }
 }
