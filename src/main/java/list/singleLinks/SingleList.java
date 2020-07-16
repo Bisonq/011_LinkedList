@@ -85,17 +85,20 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
             return true;
         } else {
             boolean shareNewMinMax = false;
-            Node<E> node = this.head.getNext();
-            while (node.getNext().getNext() != null)
+            Node<E> prevNode = this.head;
+            Node<E> node = prevNode.getNext();
+            while (node.getNext() != null) {
+                prevNode = node;
                 node = node.getNext();
-            if (node.getNext().getElement().compareTo(min) == 0) {
+            }
+            if (node.getElement().compareTo(min) == 0) {
                 this.min = null;
                 shareNewMinMax = true;
-            } else if (node.getNext().getElement().compareTo(max) == 0) {
+            } else if (node.getElement().compareTo(max) == 0) {
                 this.max = null;
                 shareNewMinMax = true;
             }
-            node.setNext(null);
+            prevNode.setNext(null);
             if (shareNewMinMax)
                 shareMinMax();
             return true;
