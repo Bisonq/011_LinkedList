@@ -27,10 +27,14 @@ public class CircularListIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
-        return null;
+        E element = this.head.getElement();
+        this.head = this.head.getNext();
+        return element;
     }
 
     public E prev() {
-        return null;
+        E element = this.tail.getElement();
+        this.tail = this.tail.getPrev();
+        return element;
     }
 }

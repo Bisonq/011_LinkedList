@@ -23,18 +23,11 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
     @Override
     public void addFirst(E element) {
         if(size == 0){
-            Node<E> node = new Node<>(element);;
-            this.head = node;
-            this.tail = node;
-            this.head.setNext(tail);
-            this.tail.setNext(head);
-            this.head.setPrev(tail);
-            this.tail.setPrev(head);
-            this.min = element;
-            this.max = element;
-            this.size++;
+            initializeList(element);
         }else if(size == 1){
-            this.tail = new Node<>(element);
+            this.head = new Node<>(element);
+            this.head.setNext(tail);
+            this.head.setPrev(tail);
             this.tail.setNext(head);
             this.tail.setPrev(head);
             size++;
@@ -43,6 +36,7 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
             Node<E> node = new Node<>(element);
             node.setNext(head);
             node.setPrev(tail);
+            this.head.setPrev(node);
             this.head = node;
             this.tail.setNext(this.head);
             size++;
@@ -50,13 +44,47 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
         }
     }
 
+    private void initializeList(E element) {
+        Node<E> node = new Node<>(element);
+        this.head = node;
+        this.tail = node;
+        this.head.setNext(tail);
+        this.tail.setNext(head);
+        this.head.setPrev(tail);
+        this.tail.setPrev(head);
+        this.min = element;
+        this.max = element;
+        this.size++;
+    }
+
     @Override
     public void addLast(E element) {
-
+        if(size == 0 ){
+            initializeList(element);
+        }else if(size == 1){
+            this.tail = new Node<>(element);
+            this.tail.setNext(head);
+            this.tail.setPrev(head);
+            this.head.setNext(tail);
+            this.head.setPrev(tail);
+            size++;
+            shareForMinMax(this.head);
+        }else{
+            Node<E> node = new Node<>(element);
+            node.setNext(this.head);
+            node.setPrev(this.tail);
+            this.tail.setNext(node);
+            this.tail = node;
+            this.head.setPrev(this.tail);
+            size++;
+            shareForMinMax(this.head);
+        }
     }
 
     private void shareForMinMax(Node<E> node){
         int counter = 0;
+        this.min = this.head.getElement();
+        this.max = this.head.getElement();
         while(counter++ < this.size){
             compareWithMax(node.getElement());
             compareWithMin(node.getElement());
@@ -76,17 +104,65 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public boolean removeFirst() {
-        return false;
+        if(this.isEmpty())
+            return false;
+        if(this.size == 1){
+            clear();
+            return true;
+        }else{
+            this.head = this.head.getNext();
+            this.head.setPrev(tail);
+            this.tail.setNext(head);
+            size--;
+            shareForMinMax(this.head);
+            return true;
+        }
     }
 
     @Override
     public boolean removeLast() {
-        return false;
+        if(this.isEmpty())
+            return false;
+        if(this.size == 1){
+            clear();
+            return true;
+        }else{
+            this.tail = this.tail.getPrev();
+            this.tail.setNext(head);
+            this.head.setPrev(tail);
+            size--;
+            shareForMinMax(this.head);
+            return true;
+        }
     }
 
     @Override
     public boolean remove(E element) {
-        return false;
+        if(this.isEmpty())
+            return false;
+        if(this.size == 0){
+            clear();
+            return true;
+        }else{
+            if(this.head.getElement().compareTo(element) == 0)
+                return this.removeFirst();
+
+            int counter = 0;
+            Node<E> node = this.head.getNext();
+            while(counter++ < this.size){
+                if(node.getElement().compareTo(element) == 0){
+                    Node<E> next = node.getNext();
+                    Node<E> prev = node.getPrev();
+                    prev.setNext(next);
+                    next.setPrev(prev);
+                    shareForMinMax(this.head);
+                    size--;
+                    return true;
+                }
+                node = node.getNext();
+            }
+            return false;
+        }
     }
 
     @Override
