@@ -618,6 +618,58 @@ public class SingleListTest {
     }
 
     @Test
+    public void setValueMethodShouldThrowIndexOutOfBoundsExceptionWhenIndexIsOutOfBound(){
+        //given
+        List<Integer> list = new SingleList<>();
+        list.addFirst(10);
+
+        //then
+        assertThatExceptionOfType(IndexOutOfBoundsException.class).isThrownBy(() -> list.setValue(5, 20));
+    }
+
+    @Test
+    public void setValueMethodShouldReturnFalseWhenListIsEmpty(){
+        //given
+        List<Integer> list = new SingleList<>();
+
+        //when
+        boolean result = list.setValue(0, 12);
+
+        //then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void setValueMethodShouldReturnTrueWhenValueWasChanged(){
+        //given
+        List<Integer> list = new SingleList<>();
+        list.addFirst(10);
+        list.addFirst(20);
+
+        //when
+        boolean result = list.setValue(0, 12);
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void setValueMethodShouldChangeTheOldValueToTheNewOne(){
+        //given
+        List<Integer> list = new SingleList<>();
+        int oldValue = 10;
+        int newValue = 12;
+        list.addFirst(oldValue);
+
+        //when
+        list.setValue(0, newValue);
+        int result = list.get(0);
+
+        //then
+        assertThat(newValue).isEqualTo(result);
+    }
+
+    @Test
     public void toStringMethodShouldWriteMethodFromTheHeadToTheTail(){
         //given
         SingleList<Integer> list = new SingleList<>();
