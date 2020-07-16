@@ -265,4 +265,8 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
     public Iterator<E> iterator() {
         return new SingleListIterator<E>(this.head);
     }
+
+    public Node<E> getHead() {
+        return head;
+    }
 }

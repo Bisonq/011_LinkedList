@@ -293,4 +293,12 @@ public class DoubleList<E extends Comparable<E>> implements List<E> {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
+
+    public Node<E> getHead() {
+        return head;
+    }
+
+    public Node<E> getTail() {
+        return tail;
+    }
 }

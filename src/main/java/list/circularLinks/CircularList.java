@@ -285,4 +285,12 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
 
         return stringBuilder.toString();
     }
+
+    public Node<E> getHead() {
+        return head;
+    }
+
+    public Node<E> getTail() {
+        return tail;
+    }
 }
