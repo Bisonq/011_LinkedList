@@ -205,10 +205,10 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public E get(int index) {
-        if(index < 0 || index > this.size() - 1)
-            throw new IndexOutOfBoundsException("Invalid index number!");
         if (this.isEmpty())
             return null;
+        if(index < 0 || index > this.size() - 1)
+            throw new IndexOutOfBoundsException("Invalid index number!");
         Node<E> node = this.head;
         int counter = 0;
         while (counter++ < index) {
