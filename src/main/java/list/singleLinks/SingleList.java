@@ -234,6 +234,20 @@ public class SingleList<E extends Comparable<E>> implements List<E> {
         return node.getElement();
     }
 
+    @Override
+    public boolean setValue(int index, E newValue) {
+        if(this.isEmpty())
+            return false;
+        if(index < 0 || index > this.size() - 1)
+            throw new IndexOutOfBoundsException("Invalid index number!");
+        Node<E> node = this.head;
+        int counter = 0;
+        while(counter++ < index)
+            node = node.getNext();
+        node.setElement(newValue);
+        return true;
+    }
+
     protected void compareElementToMinMax(E element) {
         if (max == null || element.compareTo(max) > 0)
             this.max = element;

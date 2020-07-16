@@ -115,9 +115,19 @@ public interface List<E extends Comparable<E>> extends Iterable<E> {
     E getFirst();
 
     /**
-     * Return las element in list
+     * Return last element in list
      *
      * @return last element or null when list is empty
      */
     E getLast();
+
+    /**
+     * Set value in indicated index
+     * @param index place in the list where the element will be changed
+     * when index is out of bounds then IndexOutOfBoundsException is thrown
+     * @param newValue value to which the old value will be changed
+     * @return true - when the value has changed otherwise false
+     * for example when list is empty
+     */
+    boolean setValue(int index, E newValue);
 }

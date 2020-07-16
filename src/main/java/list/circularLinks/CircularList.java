@@ -228,10 +228,10 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
 
     @Override
     public E get(int index) {
-        if(index < 0 || index > this.size() - 1)
-            throw new IndexOutOfBoundsException("Invalid index number!");
         if (this.isEmpty())
             return null;
+        if(index < 0 || index > this.size() - 1)
+            throw new IndexOutOfBoundsException("Invalid index number!");
         Node<E> node = this.head;
         int counter = 0;
         while (counter++ < index) {
@@ -248,6 +248,29 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
     @Override
     public E getLast() {
         return this.tail.getElement();
+    }
+
+    @Override
+    public boolean setValue(int index, E newValue) {
+        if (this.isEmpty())
+            return false;
+        if(index < 0 || index > this.size() - 1)
+            throw new IndexOutOfBoundsException("Invalid index number!");
+        if(index < this.size()/2){
+            Node<E> node = this.head;
+            int counter = 0;
+            while(counter++ < index)
+                node = node.getNext();
+            node.setElement(newValue);
+            return true;
+        }else{
+            Node<E> node = this.tail;
+            int counter = this.size();
+            while (counter-- > index)
+                node = node.getPrev();
+            node.setElement(newValue);
+            return true;
+        }
     }
 
     @Override
