@@ -99,12 +99,13 @@ public interface List<E extends Comparable<E>> extends Iterable<E> {
     E[] toArray(E[] arr);
 
     /**
-     * Return the first encountered element
+     * Return the value under the index
      *
-     * @param element value sought
-     * @return value pointer or null when the element is not in the list
+     * @param index position in list
+     * when index is out of bounds then IndexOutOfBoundsException is thrown
+     * @return value under the index or null when list not contain element
      */
-    E get(E element);
+    E get(int index);
 
     /**
      * Return first element in list

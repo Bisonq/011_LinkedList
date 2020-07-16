@@ -227,17 +227,17 @@ public class CircularList<E extends Comparable<E>> implements List<E> {
     }
 
     @Override
-    public E get(E element) {
+    public E get(int index) {
+        if(index < 0 || index > this.size() - 1)
+            throw new IndexOutOfBoundsException("Invalid index number!");
         if (this.isEmpty())
             return null;
         Node<E> node = this.head;
         int counter = 0;
-        while (counter++ < this.size) {
-            if (node.getElement().compareTo(element) == 0)
-                return node.getElement();
+        while (counter++ < index) {
             node = node.getNext();
         }
-        return null;
+        return node.getElement();
     }
 
     @Override
