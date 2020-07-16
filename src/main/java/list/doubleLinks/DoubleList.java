@@ -80,6 +80,8 @@ public class DoubleList<E extends Comparable<E>> implements List<E> {
     }
 
     private void shareForMinMax(Node<E> node){
+        this.min = this.head.getElement();
+        this.max = this.head.getElement();
         while(node != null){
             compareWithMax(node.getElement());
             compareWithMin(node.getElement());
@@ -148,11 +150,21 @@ public class DoubleList<E extends Comparable<E>> implements List<E> {
                 return false;
             }
         }else{
-            Node<E> node = this.head;
+            if(this.head.getElement().compareTo(element) == 0)
+                return this.removeFirst();
+
+            Node<E> node = this.head.getNext();
             while(node != null){
                 if(node.getElement().compareTo(element) == 0) {
-                    this.head = this.head.getNext();
-                    this.head.setPrev(null);
+                    Node<E> next = node.getNext();
+                    Node<E> prev = node.getPrev();
+                    if(next == null){
+                        prev.setNext(null);
+                        shareForMinMax(this.head);
+                        return true;
+                    }
+                    prev.setNext(next);
+                    next.setPrev(prev);
                     shareForMinMax(this.head);
                     return true;
                 }else{
